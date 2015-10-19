@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	#RewriteBase /
+    RewriteBase /investasi/
+
+#Ganti dengan alamat path jika site bukan root
+
+	RewriteRule ^$ /investasi/index\.php [L]
+	RewriteCond $1 !^(index\.php|assets|application|repository|favicon\.ico)
+	RewriteRule ^(.*)$ /investasi/index.php?/$1 [L]
+</IfModule>
+<IfModule !mod_rewrite.c>
+    ErrorDocument 402 /investasi/index\.php
+</IfModule>
