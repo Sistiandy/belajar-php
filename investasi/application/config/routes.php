@@ -17,6 +17,9 @@ $route['logoutapp'] = 'login/dologouters/';
 
 $route['konten/(:any)/(:any)'] = 'home/content/get/$1/$2';
 $route['berita/(:num)/(:any)'] = 'home/content/berita/$1';
+$route['berita/index/(:num)'] = 'home/news/$1';
+$route['berita/index'] = 'home/news/';
+$route['berita'] = 'home/news/';
 $route['headline/(:num)'] = 'home/content/headline/$1';
 $route['gallery'] = 'home/content/gallery/';
 

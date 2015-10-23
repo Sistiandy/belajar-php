@@ -1,0 +1,32 @@
+project pusgenkes.kemkes.go.id
+deadline note :
+minggu, 25 oktober setor semua content dari website yang lama
+senin, 26 oktober 2015 site hrus sudah up
+rabu, 28 oktober 2015 dokumentasi/administrasi harus sudah siap (user guide, presentasi website)
+
+berita ga ada paging
+link web terkait dibuat dinamis
+modul foto gallery mesti dibuatkan album
+foto gallery tidak bisa di edit title nya
+banner di buat dinamis
+link berita lainnya tidak aktif
+link web terkait ditambahkan semacam read more (link web lainnya)
+login system rubah template semuanya
+aksi detail di list komentar masuk
+crud beritanya malah hilang
+Manajemen Konten Berita Hexa di menu backend berita di ganti jadi Manajemen Konten Berita
+berita nya di bikin kaya blog, jangan di kotak2xin begitu
+cara ambil data dari session nya gmana ? soalnya session nya di encrypt
+buat crud modul user administration / management user
+tata letak front end wajib di perbaiki
+
+front end
+menu potensi, infrastruktur, prospek
+thema website dominan warna putih & hijau
+crud foto banner
+
+tulisan Home Profil Kota Makassar Profil Kedinasan Download Kontak Forum
+yang ada di footer hilangin saja, yang background div nya warna hijau
+
+
+

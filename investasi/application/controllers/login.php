@@ -30,17 +30,23 @@ class login extends CI_Controller {
 		$this->load->library('encrypt');	
 		$username = $this->input->post('username',TRUE,TRUE);
 		$password = $this->input->post('password',TRUE,TRUE);
+		
 		//echo 'bangsat';
 		//echo $this->encrypt->encode($password);exit;
 
 		$data = $this->madminpanel->getdata('admin_login', $username);
-		if($data){// && $password == $this->encrypt->decode($data[0]['password'])){
+		
+		if($data)
+		{
+			// && $password == $this->encrypt->decode($data[0]['password'])){
             //$this->session->set_userdata('ses_data', $data[0]);	
 			$this->session->set_userdata('portal_investasi', base64_encode(serialize($data)));
 			//redirect($baseUrl.'');
 			$this->session->set_flashdata('pesan', 'username atau password benar');
 			header("Location: " .base_url().'adminpanel');
-		} else {
+		} 
+		else
+		{
 			$this->session->set_flashdata('pesan', 'username atau password salah');
 			header("Location: " .base_url().'controlpanel');
 			//redirect($baseUrl.'login/login');

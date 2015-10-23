@@ -2,6 +2,7 @@
 <style>
     .tgl_na{font-style:italic; font-size:12px; color:#999999; font-weight:bold;}
 </style>
+
 <div class="text_field">
     <h1><?= $isi->judul_berita ?></h1>
     <span class="tgl_na"><?= $isi->tempat ?>,&nbsp;<?= $isi->tanggal ?></span>
@@ -15,11 +16,14 @@
             if (count($comment) > 0) {
                 foreach ($comment as $row):
                     ?>
+					
                     <div class="comment-content">
+					
                         <div class="comment-top">
                             <div class="datecreate">Tanggal Komentar : <? echo $row['comment_date'] ?></div>
                             <div class="name-user" style='margin-left:15px;'><b><? echo $row['comment_name'] ?> - <? echo $row['comment_email'] ?></b></div>
                         </div> <hr />
+						
                         <div class="comment-middle">
                             <table>
                                 <tr>
@@ -33,9 +37,12 @@
                                 </tr>
                             </table>
                         </div>
+						
                         <div class="comment-bottom"></div> 
                     </div>
+					
                     <hr />
+
                 <?php endforeach;
             }else { ?>
                 <center><i>Tidak ada komentar</i></center>

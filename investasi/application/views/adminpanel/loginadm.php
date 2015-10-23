@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Administrator Portal Investasi Kota Makassar</title>
+  <title>Pusat Inteligensia Kesehatan</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="" name="description" />
   <meta content="" name="author" />
@@ -12,21 +12,24 @@
   <link href="<?=base_url()?>assets/css/style_responsive_adminpanel.css" rel="stylesheet" />
   <link href="<?=base_url()?>assets/css/style_default_adminpanel.css" rel="stylesheet" id="style_color" />
 </head>
+
 <body id="login-body">
    <div class='loginheader1'></div>
 		<div class='headerloginnya'>
 			<center><img src="<?=base_url()?>assets/images/logo_login.png" alt="logo" class="center" /></center>
 		</div>
    <div class='loginheader1'></div>
+  
   <!-- BEGIN LOGIN -->
   <div id="login">
-    <!-- BEGIN LOGIN FORM -->
+    
+	<!-- BEGIN LOGIN FORM -->
     <form id="loginform" class="form-vertical no-padding no-margin" method="post" action="<?=base_url()?>login/dologiners">
       <div class="lock">
           <i class="icon-lock"></i>
       </div>
       <div class="control-wrap">
-          <h4>ADMINISTRATOR LOGIN HEXA</h4>
+          <h4>LOGIN SYSTEM</h4>
           <div class="control-group">
               <div class="controls">
                   <div class="input-prepend">
@@ -52,10 +55,12 @@
     <!-- END LOGIN FORM -->        
   </div>
   <!-- END LOGIN -->
+  
   <!-- BEGIN COPYRIGHT -->
   <div id="login-copyright">
-      2015 &copy;  PORTAL INVESTASI KOTA HEXA 
+      2015 &copy;  PORTAL PUSAT INTELIGENSIA KESEHATAN
   </div>
+  
 </body>
 <!-- END BODY -->
 </html>

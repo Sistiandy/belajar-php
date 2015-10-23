@@ -41,7 +41,7 @@
 					</a>
 					<ul class="sub">
 						<li>
-							<a class="" href="#" onClick="loadUrl(this,'adminpanel/get_formna/profil_kota','Manajemen Konten Profil Kota Makassar')">Profil Makassar </a>
+							<a class="" href="#" onClick="loadUrl(this,'adminpanel/get_formna/profil_kota','Manajemen Konten Profil Instansi')">Profil Instansi </a>
 						</li>
 						<li>
 						<a class="" href="#" onClick="loadUrl(this,'adminpanel/get_formna/profil_dinas','Manajemen Konten Profil Kedinasan')">Profil Kedinasan </a>
@@ -66,6 +66,8 @@
 						</li-->
 					</ul>
 				</li>
+				
+				<!--
 				<li class="has-sub">
 					<a href="javascript:;" class="">
 						<span class="icon-box"><i class="icon-file-alt"></i></span>Transactional
@@ -86,7 +88,9 @@
 						
 					</ul>	
 				</li>
+				-->
 				
+				<!--
 				<li class="has-sub">
 					<a href="javascript:;" class="">
 						<span class="icon-box"><i class="icon-file-alt"></i></span>Sarana Prasarana
@@ -104,6 +108,8 @@
 						<li><a class="" href="#" onClick="loadUrl(this,'adminpanel/getdisplay/rame/telp','Manajemen Konten Data Sambungan Telpon Kandatel')">Data Sambungan Telpon Kandatel</a></li>
 					</ul>	
 				</li>	
+				-->
+				
 				<li class="has-sub">
 					<a href="javascript:;" class="">
 						<span class="icon-box"><i class="icon-file-alt"></i></span>Multimedia

@@ -5,7 +5,7 @@
 	<meta content="Portal Investasi Kota Makasar" name="description" />
 	<meta content="investasi makassar,portal makassar,portal investasi makassar,investasi di makassar" name="keywords" />
 	
-	<title>:: Portal Investasi Kota Makasar Hexa ::</title>
+	<title>:: Portal Pusat Inteligensia Kesehatan ::</title>
 	
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/slider.css">
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/style.css">
@@ -100,12 +100,14 @@
 	</style>
 </head>
 <body>
+
 	<div id='bapaknyaheader'>
 	<div id="container_header">
 		<div id="header">
 			<div style="float:left">
 				<img src="<?=base_url()?>assets/images/logo_admin.png" />
 			</div>
+			
 			<!--<div style="float:right;color:#666;text-align:right;padding-top:15px;">
 				LOGIN PORTAL
 				<form action="" method="get">
@@ -114,10 +116,12 @@
 					<span style="font-size:11px"><a href="">Lupa Password</a></span>&nbsp;<input type="submit" value="Login" class="btn">
 				</form>
 			</div>-->
+			
 			<div class="clear"></div>		
 		</div>
 	</div>
 	</div>
+	
 	<div id="container_menu">
 		<div id="menu">
 			<div style="float:left;padding-top:5px;">
@@ -169,14 +173,17 @@
 					</ul>
 				</div>
 			</div>
+			
 			<div style="float:right;padding-top:9px;">
 				<form action="<?=base_url()?>cari" method="post">
 					<input type="text" name="key" value="" style="height:19px;width:110px;font-size:12px;border:1px solid #ccc;color:#999;background-color:#87D37C;color:#deafaf;border:1px solid #26A65B">
 					<input type="submit" value="Search" class="btn">
 				</form>
 			</div>
+			
 		</div>
 	</div>
+	
 	<?php if($type != 'forum' && $type != 'thread' && $type != 'viewposting' && $type != 'cari_konten') { ?>
 		<div id="container_slider">
 			<div class="slider">
@@ -192,6 +199,7 @@
 			  <div class="pnBtn next"> <span class="blackBg"></span> <a class="arrow" href="javascript:void(0)"></a> </div>
 			</div>
 		 </div>
+		 
 		<div id="container_headline">
 			<div id="headline">
 				<?php foreach($headline as $v){?>
@@ -218,8 +226,11 @@
 			</div>
 		</div> 
 	<?php } ?>
+	
 	<div id="wrapper">
+	
 		<div class='bgrepeat'></div>
+		
 		<?php if ($type == 'forum' && $type == 'thread' && $type != 'viewposting' && $type != 'cari_konten') { ?>
 			<div id="header_forum">
 				<div id="menu">
@@ -232,12 +243,15 @@
 				</div>
 			</div>
 		<?php } ?>
+		
 		<?php require_once 'content/page_'.$content.'.php'; ?>
 		<?php if($type != 'forum' && $type != 'thread' && $type != 'viewposting' && $type != 'cari_konten') { ?>
+			
 			<div class="widget">
 				<div class="title">Kepala Dinas</div>
 					<div><center><img src="<?=base_url()?>repository/foto/kadin/kadin.jpg" height="200px" style="border: 1px solid #DDD;border-radius: 5px;box-shadow: 0px 0px 5px #DDD;" /></div>
 				<br /><br />
+				
 				<div class="title">Sub Menu</div>
 				<div class="menu_list" id="secondpane"> <!--Code for menu starts here-->
 					<?=$menu_samping?>
@@ -264,7 +278,8 @@
 						<a href="#">Prosedur Pendirian Bangunan</a>	
 				   </div>-->
 				</div><br /><br />
-				<div class="title">Berita Terbaru Hexa</div>
+				
+				<div class="title">Berita Terbaru</div>
 					<ul id="ticker_02" class="ticker">
 						<?php 
 							foreach($berita as $v){
@@ -289,8 +304,10 @@
 						<li>
 							<a href="#"><img src="<?=base_url()?>assets/images/thumb_berita1.jpg" class="thumb">Untuk meringankan beban masyarakat  Disperindag Jualan Sembako Murah</a>
 						</li-->
-					</ul><div style="margin-top:5px;"><a href="#">Berita lainnya</a></div><br /><br />
+					</ul><div style="margin-top:5px;"><a href="<?=base_url()?>berita">Berita lainnya</a></div><br /><br />
+				
 				<div class="title">Link Web Terkait</div>
+					
 					<ul id="ticker_02" class="ticker" style="height:214px;">
 						<li>
 							<a href="http://www.bkpm.go.id" target="_blank"><img src="<?=base_url()?>repository/foto/link/bkpm.jpg" class="thumb" width="31" height="31">BKPM</a>
@@ -305,11 +322,13 @@
 							<a href="http://www.sulsel.go.id/" target="_blank"><img src="<?=base_url()?>repository/foto/link/sulsel.jpg" class="thumb" width="31" height="31">Portal Sulawesi Selatan</a>
 						</li>
 					</ul>
+					
 			</div>
 	
 		<?php } ?>
 		<div class="clear"></div>
 	</div>
+	
 	<div id="container_footer">
 		<div id="footer">
 			<a href="<?=base_url()?>">Home</a><img src="<?=base_url()?>assets/images/line_menu.png" class="space" />
@@ -322,7 +341,7 @@
 			<br />
 			<br />
 			<br />
-			Copyright 2013 Portal Investasi Kota Makassar
+			Copyright 2015 Portal Pusat Inteligensia Kesehatan
 		</div>
 	</div>
 

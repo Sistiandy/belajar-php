@@ -18,12 +18,15 @@ class adminpanel extends CI_Controller {
         $this->load->model('madminpanel');
     }
 
-    function index() {
-
-        if ($this->auth) {
-            $data['judul'] = 'Beranda Hexa';
+    function index() 
+	{
+        if ($this->auth) 
+		{
+            $data['judul'] = 'Beranda';
             $this->load->view('adminpanel/index', $data);
-        } else {
+        } 
+		else 
+		{
             header("Location: " . base_url() . 'controlpanel');
         }
     }
@@ -77,6 +80,7 @@ class adminpanel extends CI_Controller {
                 $data['param'] = $param1;
                 $template = "multimedia";
                 break;
+				
             case 'file_multimedia':
                 $type = $this->input->post('type');
                 $html = "";

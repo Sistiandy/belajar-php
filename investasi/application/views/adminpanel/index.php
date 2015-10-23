@@ -12,7 +12,7 @@ Website: http://thevectorlab.net/
 <!-- BEGIN HEAD -->
 <head>
 	<meta charset="utf-8" />
-	<title>Administrator Portal Investasi Kota Makassar Hexa</title>
+	<title>Administrator</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -54,6 +54,7 @@ Website: http://thevectorlab.net/
 	<script src="<?=base_url()?>assets/js/fungsi.js"></script>
 </head>
 <!-- END HEAD -->
+
 <!-- BEGIN BODY -->
 <body class="fixed-top">
 	<!-- BEGIN HEADER -->
@@ -64,7 +65,7 @@ Website: http://thevectorlab.net/
 			<div class="container-fluid" >
 				<!-- BEGIN LOGO -->
 				<a class="brand" href="<?=base_url()?>home">
-				    AdminPanel
+				    Dashboard
 				</a>
 				<!-- END LOGO -->
 				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -105,7 +106,7 @@ Website: http://thevectorlab.net/
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="img/avatar1_small.jpg" alt="">
-                                <span class="username">Hexa Development</span>
+                                <span class="username">Administrator</span>
 							<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
@@ -113,7 +114,7 @@ Website: http://thevectorlab.net/
 								<li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
 								<li><a href="#"><i class="icon-calendar"></i> Calendar</a></li>
 								<li class="divider"></li>
-								<li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+								<li><a href="<?php echo site_url(); ?>/login/dologouters"><i class="icon-key"></i> Log Out</a></li>
 							</ul>
 						</li>
 						<!-- END USER LOGIN DROPDOWN -->
@@ -166,9 +167,9 @@ Website: http://thevectorlab.net/
 	<!-- BEGIN FOOTER -->
 	<div id="footer">
 		<span style="font-weight: bold; color: inherit; text-decoration: none;">
-			PORTAL INVESTASI KOTA MAKASSAR HEXA
+			Pusat Inteligensia Kesehatan
 			<!--Jl. Taman Makam Pahlawan No.20 Kalibata Jakarta Selatan-->
-		</span>&nbsp;&copy;&nbsp;2013&nbsp;-&nbsp;All right reserved
+		</span>&nbsp;&copy;&nbsp;2015&nbsp;-&nbsp;All right reserved
 		<div class="span pull-right">
 			<span class="go-top"><i class="icon-arrow-up"></i></span>
 		</div>
