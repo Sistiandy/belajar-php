@@ -98,7 +98,7 @@ class Member extends CI_Controller {
                 } else {
                     $createdate = date('Y-m-d H:i');
                 }
-                $paramsupdate['member_image'] = $this->do_upload($name = 'member_image', $createdate, $status);
+                $paramsupdate['member_image'] = $this->do_upload($name = 'member_image', $createdate);
             }
             $paramsupdate['member_id'] = $status;
             $this->Member_model->add($paramsupdate);
@@ -130,7 +130,7 @@ class Member extends CI_Controller {
     }
 
     // Setting Upload File Requied
-    function do_upload($name, $createdate, $status) {
+    function do_upload($name, $createdate) {
         $config['upload_path'] = FCPATH . 'uploads/';
 
         $paramsupload = array('date' => $createdate);
