@@ -66,19 +66,21 @@ class Member extends CI_Controller {
 
             if ($this->input->post('member_id')) {
                 $params['member_id'] = $this->input->post('member_id');
+                $nip = $this->input->post('member_nip');
             } else {
                 $params['username'] = $this->input->post('username');
                 $params['password'] = sha1($this->input->post('password'));
                 $params['member_input_date'] = date('Y-m-d H:i:s');
+
+                $lastmember = $this->Member_model->get(array('order_by' => 'member_id', 'limit' => 1));
+                if (empty($lastmember)) {
+                    $nip = $params['member_nip'] = date('Ym') . sprintf('%02d', 01);
+                } else {
+                    $num = substr($lastmember['member_nip'], 6, 2);
+                    $nip = $params['member_nip'] = date('Ym') . sprintf('%02d', $num + 01);
+                }
             }
 
-            $lastmember = $this->Member_model->get(array('order_by' => 'member_id', 'limit' => 1));
-            if (empty($lastmember)) {
-                $params['member_nip'] = date('Ym') . 01;
-            } else {
-                $num = substr($lastmember['member_nip'], 6, 2);
-                $params['member_nip'] = date('Ym') . $num + 01;
-            }
             $params['member_status'] = $this->input->post('member_status');
             $params['member_last_update'] = date('Y-m-d H:i:s');
             $params['member_full_name'] = stripslashes($this->input->post('member_full_name'));
@@ -98,7 +100,7 @@ class Member extends CI_Controller {
                 } else {
                     $createdate = date('Y-m-d H:i');
                 }
-                $paramsupdate['member_image'] = $this->do_upload($name = 'member_image', $createdate);
+                $paramsupdate['member_image'] = $this->do_upload($name = 'member_image', $createdate, $nip);
             }
             $paramsupdate['member_id'] = $status;
             $this->Member_model->add($paramsupdate);
@@ -111,7 +113,7 @@ class Member extends CI_Controller {
                         'user_id' => $this->session->userdata('user_id'),
                         'log_module' => 'Peserta',
                         'log_action' => $data['operation'],
-                        'log_info' => 'ID:'.$status.';Title:' . $params['member_full_name']
+                        'log_info' => 'ID:' . $status . ';Title:' . $params['member_full_name']
                     )
             );
 
@@ -130,7 +132,7 @@ class Member extends CI_Controller {
     }
 
     // Setting Upload File Requied
-    function do_upload($name, $createdate) {
+    function do_upload($name, $createdate, $nip) {
         $config['upload_path'] = FCPATH . 'uploads/';
 
         $paramsupload = array('date' => $createdate);
@@ -145,7 +147,8 @@ class Member extends CI_Controller {
 
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
         $config['max_size'] = '32000';
-        $this->upload->initialize($config);
+        $config['file_name'] = $nip;
+                $this->upload->initialize($config);
 
         if (!$this->upload->do_upload($name)) {
             echo $config['upload_path'];
