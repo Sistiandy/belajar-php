@@ -80,7 +80,7 @@ class Posts_model extends CI_Model {
         $this->db->join('user', 'user.user_id = posts.user_user_id', 'left');
         $res = $this->db->get('posts');
 
-        if(isset($params['id']))
+        if(isset($params['id']) OR (isset($params['limit']) AND $params['limit'] == 1))
         {
             return $res->row_array();
         }

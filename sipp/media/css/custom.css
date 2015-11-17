@@ -6424,3 +6424,45 @@ ul.notifications {
 .post-inherit{
     position:inherit;
 }
+
+/*Login css*/
+
+.header-login{
+    height : 80px;
+    background-color : #446CB3;
+}
+
+.text-header{
+    color: #fff;
+    background-color : #52B3D9;
+}
+
+.header-login h1{
+    margin-top:20px;
+    color : #E4F1FE;
+}
+
+.tbl-login{
+    padding:0px 60px 0px 0px;
+}
+
+.btn-login{
+    border-radius:0;
+    width:100%
+}
+
+.middle-login{
+    margin-top:20px;
+}
+
+.bottom-login{
+    margin-top:10px;
+}
+
+.bottom-login .left{
+    padding:0px 40px 0px 40px;
+}
+
+.bottom-login .right{
+    padding:0px 40px 0px 40px;
+}

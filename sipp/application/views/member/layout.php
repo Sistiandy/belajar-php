@@ -56,13 +56,13 @@
                     <div class="left_col scroll-view">
 
                         <div class="navbar nav_title" style="border: 0;">
-                            <a href="<?php echo site_url('admin') ?>" class="site_title"><i class="fa fa-paw"></i> <span>SYSCMS</span></a>
+                            <a href="<?php echo site_url('member') ?>" class="site_title"><i class="fa fa-paw"></i> <span>SYSCMS</span></a>
                         </div>
                         <div class="clearfix"></div>
 
                         <br />
 
-                        <?php $this->load->view('admin/sidebar') ?>
+                        <?php $this->load->view('member/sidebar') ?>
                         <!-- /menu footer buttons -->
                         <div class="sidebar-footer hidden-small">
                             <a data-toggle="tooltip" data-placement="top" title="Settings">
@@ -74,7 +74,7 @@
                             <a data-toggle="tooltip" data-placement="top" title="Lock">
                                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                             </a>
-                            <?php echo form_open(site_url('admin/auth/logout'), array('id' => 'formLogout')) ?>
+                            <?php echo form_open(site_url('member/auth/logout'), array('id' => 'formLogout')) ?>
                             <input type="hidden" name="location" value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
                             <a onclick="document.getElementById('formLogout').submit()" type="submit" data-toggle="tooltip" data-placement="top" title="Logout">
                                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
@@ -90,11 +90,11 @@
                         <?php
                         if ($this->session->flashdata('success')) {
                             $data['message'] = $this->session->flashdata('success');
-                            $this->load->view('admin/notification_success', $data);
+                            $this->load->view('member/notification_success', $data);
                         }
                         if ($this->session->flashdata('failed')) {
                             $data['message'] = $this->session->flashdata('failed');
-                            $this->load->view('admin/notification_failed', $data);
+                            $this->load->view('member/notification_failed', $data);
                         }
                         ?>
 
@@ -111,13 +111,13 @@
                                         <span class=" fa fa-angle-down"></span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
-                                        <li><a href="<?php echo site_url('admin/dashboard') ?>">  Home</a>
+                                        <li><a href="<?php echo site_url('member/dashboard') ?>">  Home</a>
                                         </li>
-                                        <li><a href="<?php echo site_url('admin/profile') ?>">  Profile</a>
+                                        <li><a href="<?php echo site_url('member/profile') ?>">  Profile</a>
                                         </li>
                                         <li>
                                         <center>
-                                            <?php echo form_open(site_url('admin/auth/logout')) ?>
+                                            <?php echo form_open(site_url('member/auth/logout')) ?>
                                             <input type="hidden" name="location" value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
                                             <button class="btn btn-xs btn-danger" id="btn-lgout" type="submit">
                                                 <i class="fa fa-sign-out pull-right"></i> Log out
