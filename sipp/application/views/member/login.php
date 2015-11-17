@@ -109,7 +109,13 @@
 
             });
 
+
         </script>
+        <?php if ($this->session->flashdata('alert')) { ?>
+            <script type="text/javascript">
+                alert('<?php echo $this->session->flashdata('alert') ?>');
+            </script>
+        <?php } ?>
 
     </head>
 
@@ -121,51 +127,7 @@
                 <center>
                     <h1>SISTEM INFORMASI PRESENSI PRAKRIN</h1>
                 </center>
-
             </div>
-
-            <!--            <div id="wrapper">
-                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                
-                            </div>
-                            <div id="login" class="animate form">
-                                <section class="login_content">
-                                    <form role="form" action="<?php echo site_url('member/auth/login') ?>" method="post">
-            <?php
-            echo form_open(current_url(), array('role' => 'form', 'class' => 'form-signin'));
-            if (isset($_GET['location'])) {
-                echo '<input type="hidden" name="location" value="';
-                if (isset($_GET['location'])) {
-                    echo htmlspecialchars($_GET['location']);
-                }
-                echo '" />';
-            }
-            ?>
-                                        <h1>Admin Login</h1>
-                                        <div>
-                                            <input autofocus type="text" class="form-control" placeholder="Username" name="username" required="" />
-                                        </div>
-                                        <div>
-                                            <input type="password" class="form-control" placeholder="Password" name="password" required="" />
-                                        </div>
-                                        <div>
-                                            <button class="btn btn-default submit" type="submit" >Log in</button>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="separator">
-            
-                                            <div class="clearfix"></div>
-                                            <br />
-                                            <div>
-                                                <p>©2015 All Rights Reserved. Syscms. Privacy and Terms</p>
-                                            </div>
-                                        </div>
-                                    </form>
-                                     form 
-                                </section>
-                                 content 
-                            </div>
-                        </div>-->
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 text-header">
@@ -196,76 +158,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                <?php foreach ($present as $row): ?>
+                                    <tr>
+                                        <td><?php echo pretty_date($row['present_date'], 'l, d m Y', FALSE) ?></td>
+                                        <td><?php echo $row['member_full_name'] ?></td>
+                                        <td><?php echo $row['present_entry_time'] ?></td>
+                                        <td><?php echo $row['present_out_time'] ?></td>
+                                        <td><?php echo ($row['present_is_late'] == 1)? 'Telat' : '-' ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
 
@@ -277,12 +178,21 @@
             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 bottom-login">
                 <div class="row">
                     <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12 left">
-                        <form role="form" action="<?php echo site_url('member/auth/login') ?>" method="post">
+                        <form role="form" action="<?php echo site_url('member/auth/present') ?>" method="post">
+                            <?php
+                            if (isset($_GET['location'])) {
+                                echo '<input type="hidden" name="location" value="';
+                                if (isset($_GET['location'])) {
+                                    echo htmlspecialchars($_GET['location']);
+                                }
+                                echo '" />';
+                            }
+                            ?>
                             <div class="form-group">
                                 <h2>ABSENSI</h2>
                                 <div class="row">
                                     <div class="col-md-9">
-                                        <input name="nip" typt="text" class="form-control" placeholder="Nip">
+                                        <input autofocus="" name="nip" typt="text" class="form-control" placeholder="Nip">
                                         <input name="password" type="password" class="form-control" placeholder="Password">
                                     </div>
                                     <div class="col-md-3" style="padding-left:0px">
@@ -298,24 +208,30 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php if ($this->session->flashdata('failedpresent')) { ?>
+                                    <br><center><label><?php echo $this->session->flashdata('failedpresent') ?></label></center>
+                                <?php } ?>
                                 <input type="submit" class="btn btn-success btn-login" value="Submit">
                             </div>
                         </form>
                     </div>
                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                         <h2>BERITA</h2>
-                            <div class="container content"> 
-                                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                                    <!-- Indicators --> 
-                                    <ol class="carousel-indicators"> 
-                                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li> 
-                                        <li data-target="#carousel-example-generic" data-slide-to="1"></li> 
-                                        <li data-target="#carousel-example-generic" data-slide-to="2"></li> 
-                                    </ol> 
-                                    <!-- Wrapper for slides --> 
-                                    <div class="carousel-inner"> 
-                                        <?php $i = 1;  foreach ($posts as $row): ?>
-                                        <div class="item <?php echo ($i == 1)? 'active' : ''; ?>"> 
+                        <div class="container content"> 
+                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators --> 
+                                <ol class="carousel-indicators"> 
+                                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li> 
+                                    <li data-target="#carousel-example-generic" data-slide-to="1"></li> 
+                                    <li data-target="#carousel-example-generic" data-slide-to="2"></li> 
+                                </ol> 
+                                <!-- Wrapper for slides --> 
+                                <div class="carousel-inner"> 
+                                    <?php
+                                    $i = 1;
+                                    foreach ($posts as $row):
+                                        ?>
+                                        <div class="item <?php echo ($i == 1) ? 'active' : ''; ?>"> 
                                             <div class="row"> 
                                                 <div class="col-xs-12"> 
                                                     <div class="thumbnail adjust1"> 
@@ -326,7 +242,7 @@
                                                             <div class="caption"> 
                                                                 <p class="text-info lead adjust2"><?php echo $row['posts_title'] ?></p> 
                                                                 <p><i> <?php echo pretty_date($row['posts_published_date'], 'l, d m Y', FALSE) ?></i></p> 
-                                                                <blockquote class="adjust2"> <p><?php echo strip_tags(character_limiter($row['posts_title'], 250)) ?></p> 
+                                                                <blockquote class="adjust2"> <p><?php echo strip_tags(character_limiter($row['posts_description'], 250)) ?></p> 
                                                                 </blockquote> 
                                                             </div> 
                                                         </div> 
@@ -334,21 +250,36 @@
                                                 </div> 
                                             </div> 
                                         </div> 
-                                        <?php $i++; endforeach; ?>
-                                    </div> <!-- Controls --> 
-                                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> 
-                                        <span class="glyphicon glyphicon-chevron-left"></span> </a> 
-                                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> 
-                                        <span class="glyphicon glyphicon-chevron-right"></span> 
-                                    </a> </div> 
-                            </div>
+                                        <?php
+                                        $i++;
+                                    endforeach;
+                                    ?>
+                                </div> <!-- Controls --> 
+                                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> 
+                                    <span class="glyphicon glyphicon-chevron-left"></span> </a> 
+                                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> 
+                                    <span class="glyphicon glyphicon-chevron-right"></span> 
+                                </a> </div> 
+                        </div>
                     </div>
                     <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12 right">
                         <form role="form" action="<?php echo site_url('member/auth/login') ?>" method="post">
+                            <?php
+                            if (isset($_GET['location'])) {
+                                echo '<input type="hidden" name="location" value="';
+                                if (isset($_GET['location'])) {
+                                    echo htmlspecialchars($_GET['location']);
+                                }
+                                echo '" />';
+                            }
+                            ?>
                             <div class="form-group">
                                 <h2>LOGIN</h2>
-                                <input name="nip" typt="text" class="form-control" placeholder="Nip">
+                                <input name="username" typt="text" class="form-control" placeholder="username">
                                 <input name="password" type="password" class="form-control" placeholder="Password">
+                                <?php if ($this->session->flashdata('failed')) { ?>
+                                    <center><label><?php echo $this->session->flashdata('failed') ?></label></center>
+                                <?php } ?>
                                 <input type="submit" class="btn btn-success btn-login" value="Login">
                             </div>
                         </form>

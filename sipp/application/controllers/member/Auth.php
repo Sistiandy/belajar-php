@@ -25,8 +25,95 @@ class Auth extends CI_Controller {
         redirect('member/auth/login');
     }
 
-    function login() {
+    function present($lokasi = '') {
+        $this->load->model('Present_model');
+        if ($this->session->userdata('logged_member')) {
+            redirect('member');
+        }
+
+        if ($lokasi != '') {
+            $lokasi = $this->input->post('location');
+        } else {
+            $lokasi = NULL;
+        }
+        $this->form_validation->set_rules('nip', 'Nip', 'trim|required');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+        $this->form_validation->set_rules('desc', 'Keterangan', 'trim|required');
+        if ($_POST AND $this->form_validation->run() == TRUE) {
+            $nip = $this->input->post('nip', TRUE);
+            $password = $this->input->post('password', TRUE);
+            $desc = $this->input->post('desc', TRUE);
+            $this->db->from('member');
+            $this->db->where('member_nip', $nip);
+            $this->db->where('password', sha1($password));
+            $this->db->where('member_status', TRUE);
+            $query = $this->db->get();
+
+            if ($query->num_rows() > 0) {
+                $params['member_member_nip'] = $nip;
+                $params['member_member_id'] = $query->row('member_id');
+                $params['present_year'] = date('Y');
+                $params['present_month'] = date('m');
+                $params['present_date'] = date('Y-m-d');
+                if ($desc == 0) {
+                    $checkin = $this->Present_model->get(array('date' => date('Y-m-d'), 'member_nip' => $nip));
+                    if (!empty($checkin)) {
+                        $this->session->set_flashdata('failedpresent', 'Maaf, anda sudah mengisi jam kedatangan untuk hari ini');
+                        header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
+                    } else {
+                        if (date('H:i:s') > '08:15:59') {
+                            $params['present_is_late'] = TRUE;
+                        }
+                        $params['present_desc'] = 'Hadir';
+                        $params['present_entry_time'] = date('H:i:s');
+                        $this->Present_model->add($params);
+                        if ($lokasi != '') {
+                            $this->session->set_flashdata('alert', 'Yes, Absensi anda telah diinput');
+                            header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
+                        } else {
+                            $this->session->set_flashdata('alert', 'Yes, Absensi anda telah diinput');
+                            redirect('member/auth/login');
+                        }
+                    }
+                } else {
+                    if (date('H:i:s') < '17:00:00') {
+                        $params['present_is_before'] = TRUE;
+                    }
+                    $checkout = $this->Present_model->get(array('date' => date('Y-m-d'), 'member_nip' => $nip));
+                    if (empty($checkout)) {
+                        $this->session->set_flashdata('failedpresent', 'Maaf, silahkan input jam kedatangan terlebih dahulu');
+                        header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
+                    } else {
+                        $params['present_id'] = $checkout['present_id'];
+                        $params['present_out_time'] = date('H:i:s');
+                        $this->Present_model->add($params);
+                        if ($lokasi != '') {
+                            $this->session->set_flashdata('alert', 'Yes, Absensi anda telah diinput');
+                            header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
+                        } else {
+                            $this->session->set_flashdata('alert', 'Yes, Absensi anda telah diinput');
+                            redirect('member/auth/login');
+                        }
+                    }
+                }
+            } else {
+                if ($lokasi != '') {
+                    $this->session->set_flashdata('failedpresent', 'Sorry, username and password do not match');
+                    header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
+                } else {
+                    $this->session->set_flashdata('failedpresent', 'Sorry, username and password do not match');
+                    redirect('member/auth/login');
+                }
+            }
+        } else {
+            $this->session->set_flashdata('failedpresent', 'Sorry, Nip, password and keterangan are not complete');
+            header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
+        }
+    }
+
+    function login($lokasi = '') {
         $this->load->model('Posts_model');
+        $this->load->model('Present_model');
         $this->load->helper('text');
         if ($this->session->userdata('logged_member')) {
             redirect('member');
@@ -34,6 +121,7 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         $data['posts'] = $this->Posts_model->get(array('limit' => 3, 'status' => TRUE));
+        $data['present'] = $this->Present_model->get(array('date' => date('Y-m-d'), 'limit' => 10));
         if ($_POST AND $this->form_validation->run() == TRUE) {
             if ($this->input->post('location')) {
                 $lokasi = $this->input->post('location');
@@ -58,7 +146,7 @@ class Auth extends CI_Controller {
             $this->db->from('member');
             $this->db->where('username', $username);
             $this->db->where('password', sha1($password));
-            $this->db->where('user_status', TRUE);
+            $this->db->where('member_status', TRUE);
             $query = $this->db->get();
 
             if ($query->num_rows() > 0) {

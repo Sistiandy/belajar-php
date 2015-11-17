@@ -26,6 +26,11 @@ class Auth extends CI_Controller {
     }
 
     function login() {
+        $this->load->model('Posts_model');
+        $this->load->model('Present_model');
+        $this->load->helper('text');
+        $data['posts'] = $this->Posts_model->get(array('limit' => 3, 'status' => TRUE));
+        $data['present'] = $this->Present_model->get(array('limit' => 10, 'date' => date('Y-m-d')));
         if ($this->session->userdata('logged')) {
             redirect('admin');
         }
@@ -39,7 +44,7 @@ class Auth extends CI_Controller {
             }
             $this->process_login($lokasi);
         } else {
-            $this->load->view('admin/login');
+            $this->load->view('admin/login', $data);
         }
     }
 
