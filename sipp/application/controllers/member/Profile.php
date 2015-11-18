@@ -15,10 +15,10 @@ class Profile extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        if ($this->session->userdata('logged') == NULL) {
+        if ($this->session->userdata('logged_member') == NULL) {
             header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($_SERVER['REQUEST_URI']));
         }
-        $this->load->model('User_model');
+        $this->load->model('Member_model');
         $this->load->model('Activity_log_model');
         $this->load->helper(array('form', 'url'));
     }
@@ -26,10 +26,10 @@ class Profile extends CI_Controller {
     // User_customer view in list
     public function index($offset = NULL) {
         $id = $this->session->userdata('member_id');
-        if ($this->User_model->get(array('id' => $id)) == NULL) {
+        if ($this->Member_model->get(array('id' => $id)) == NULL) {
             redirect('member/user');
         }
-        $data['user'] = $this->User_model->get(array('id' => $id));
+        $data['member'] = $this->Member_model->get(array('id' => $id));
         $data['title'] = 'Detail Profil';
         $data['main'] = 'member/profile/profile_detail';
         $this->load->view('member/layout', $data);
@@ -64,7 +64,7 @@ class Profile extends CI_Controller {
             $status = $this->Member_model->add($params);
 
             if (!empty($_FILES['member_image']['name'])) {
-                if ($this->input->post('cases_id')) {
+                if ($this->input->post('member_id')) {
                     $createdate = $this->input->post('member_input_date');
                 } else {
                     $createdate = date('Y-m-d H:i');
@@ -79,13 +79,43 @@ class Profile extends CI_Controller {
         } else {
 
             // Edit mode
-            $data['user'] = $this->User_model->get(array('id' => $this->session->userdata('user_id')));
-            $data['role'] = $this->User_model->get_role();
-            $data['button'] = ($id == $this->session->userdata('user_id')) ? 'Ubah' : 'Reset';
+            $data['member'] = $this->Member_model->get(array('id' => $this->session->userdata('member_id')));
+            $data['button'] = 'Ubah';
             $data['title'] = $data['operation'] . ' Profil';
             $data['main'] = 'member/profile/profile_edit';
             $this->load->view('member/layout', $data);
         }
+    }
+
+    // Setting Upload File Requied
+    function do_upload($name, $createdate, $nip) {
+        $this->load->library('upload');
+        $config['upload_path'] = FCPATH . 'uploads/';
+
+        $paramsupload = array('date' => $createdate);
+        list($date, $time) = explode(' ', $paramsupload['date']);
+        list($year, $month, $day) = explode('-', $date);
+        $config['upload_path'] = FCPATH . 'uploads/member_photo/' . $year . '/' . $month . '/' . $day . '/';
+
+        /* create directory if not exist */
+        if (!is_dir($config['upload_path'])) {
+            mkdir($config['upload_path'], 0777, TRUE);
+        }
+
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['max_size'] = '32000';
+        $config['file_name'] = $nip;
+                $this->upload->initialize($config);
+
+        if (!$this->upload->do_upload($name)) {
+//            echo $config['upload_path'];
+            $this->session->set_flashdata('failed', $this->upload->display_errors(''));
+            redirect(uri_string());
+        }
+
+        $upload_data = $this->upload->data();
+
+        return $upload_data['file_name'];
     }
 
     function cpw($id = NULL) {
@@ -96,15 +126,15 @@ class Profile extends CI_Controller {
         if ($_POST AND $this->form_validation->run() == TRUE) {
             $id = $this->input->post('user_id');
             $params['user_password'] = sha1($this->input->post('user_password'));
-            $status = $this->User_model->change_password($id, $params);
+            $status = $this->Member_model->change_password($id, $params);
 
             $this->session->set_flashdata('success', 'Ubah Password Berhasil');
             redirect('member/profile');
         } else {
-            if ($this->User_model->get(array('id' => $id)) == NULL) {
+            if ($this->Member_model->get(array('id' => $id)) == NULL) {
                 redirect('member/profile');
             }
-            $data['user'] = $this->User_model->get(array('id' => $id));
+            $data['user'] = $this->Member_model->get(array('id' => $id));
             $data['title'] = 'Ubah Password';
             $data['main'] = 'member/profile/change_pass';
             $this->load->view('member/layout', $data);
