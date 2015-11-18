@@ -72,7 +72,7 @@
                     <tr>
                         <td>Status</td>
                         <td>:</td>
-                        <td><?php echo ($member['member_division'] == 0) ? 'Non-Aktif' : 'Aktif' ?></td>
+                        <td><?php echo ($member['member_status'] == 0) ? 'Non-Aktif' : 'Aktif' ?></td>
                     </tr>
                     <tr>
                         <td>Tanggal Daftar</td>
