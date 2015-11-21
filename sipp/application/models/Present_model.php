@@ -40,6 +40,10 @@ class Present_model extends CI_Model {
         if (isset($params['member_nip'])) {
             $this->db->where('member_member_nip', $params['member_nip']);
         }
+        if (isset($params['date_start']) AND isset($params['date_end'])) {
+            $this->db->where('present_date', $params['date_start']);
+            $this->db->or_where('present_date', $params['date_end']);
+        }
 
         if (isset($params['limit'])) {
             if (!isset($params['offset'])) {

@@ -72,7 +72,7 @@ class Member_model extends CI_Model {
             member_image, member_mentor, member_division, member_status, member_input_date, member_last_update');
         $res = $this->db->get('member');
 
-        if(isset($params['id']) OR (isset($params['limit']) AND $params['limit'] == 1))
+        if(isset($params['id']) OR (isset($params['limit']) AND $params['limit'] == 1) OR (isset($params['member_nip'])))
         {
             return $res->row_array();
         }

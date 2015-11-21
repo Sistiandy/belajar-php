@@ -154,6 +154,7 @@
                                     <th>Nama</th>
                                     <th>Datang</th>
                                     <th>Pulang</th>
+                                    <th>Kehadiran</th>
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
@@ -162,9 +163,10 @@
                                     <tr>
                                         <td><?php echo pretty_date($row['present_date'], 'l, d m Y', FALSE) ?></td>
                                         <td><?php echo $row['member_full_name'] ?></td>
-                                        <td><?php echo $row['present_entry_time'] ?></td>
-                                        <td><?php echo $row['present_out_time'] ?></td>
-                                        <td><?php echo ($row['present_is_late'] == 1)? 'Telat' : 'Hadir' ?></td>
+                                        <td><?php echo ($row['present_entry_time'] == NULL) ? '-' : $row['present_entry_time'] ?></td>
+                                        <td><?php echo ($row['present_out_time'] == NULL) ? '-' : $row['present_out_time'] ?></td>
+                                        <td><?php echo $row['present_desc'] ?></td>
+                                        <td><?php echo ($row['present_is_late'] == 1)? 'Telat' : '-' ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
