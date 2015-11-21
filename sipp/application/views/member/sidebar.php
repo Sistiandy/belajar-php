@@ -10,10 +10,9 @@
                 </ul>
             </li>
 
-            <li><a><i class="fa fa-newspaper-o"></i> Posting <span class="fa fa-chevron-down"></span></a>
+            <li><a><i class="fa fa-newspaper-o"></i> Kehadiran <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none">
-                    <li><a href="<?php echo site_url('member/posts') ?>">Daftar Posting</a>
-                    <li><a href="<?php echo site_url('member/posts/category') ?>">Category Posting</a>
+                    <li><a href="<?php echo site_url('member/present') ?>">Daftar Kehadiran</a>
                     </li>
                 </ul>
             </li>

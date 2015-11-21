@@ -8,7 +8,14 @@
                 </span>
             </h3><br>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-2">
+            <?php if (!empty($member['member_image'])) { ?>
+            <img src="<?php echo upload_url('member_photo/'.  pretty_date($member['member_input_date'], 'Y/m/d/', FALSE).$member['member_image']) ?>" class="img-responsive ava-detail">
+            <?php } else { ?>
+                <img src="<?php echo base_url('media/image/missing-image.png') ?>" class="img-responsive ava-detail">
+            <?php } ?>
+        </div>
+        <div class="col-md-10">
             <table class="table table-striped">
                 <tbody>
                    <tr>

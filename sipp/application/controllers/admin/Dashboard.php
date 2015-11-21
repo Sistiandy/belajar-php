@@ -22,6 +22,13 @@ class Dashboard extends CI_Controller {
     // Dashboard View
     public function index()
     {
+        $this->load->library('pagination');
+        $this->load->model('Present_model');
+        $data['present'] = $this->Present_model->get(array('limit' => 10));
+        $config['base_url'] = site_url('admin/member/index');
+        $config['total_rows'] = count($this->Present_model->get());
+        $this->pagination->initialize($config);
+        
         $data['title'] = 'Dashboard';
         $data['main'] = 'admin/dashboard/dashboard';
         $this->load->view('admin/layout', $data);

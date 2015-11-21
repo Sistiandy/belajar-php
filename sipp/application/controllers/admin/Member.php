@@ -168,28 +168,18 @@ class Member extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>', '</div>');
         if ($_POST AND $this->form_validation->run() == TRUE) {
             $id = $this->input->post('member_id');
-            $params['member_password'] = sha1($this->input->post('member_password'));
-            $status = $this->User_model->change_password($id, $params);
+            $params['password'] = sha1($this->input->post('member_password'));
+            $status = $this->Member_model->change_password($id, $params);
 
-            // activity log
-            $this->Activity_log_model->add(
-                    array(
-                        'log_date' => date('Y-m-d H:i:s'),
-                        'user_id' => $this->session->userdata('user_id'),
-                        'log_module' => 'User',
-                        'log_action' => 'Reset Password',
-                        'log_info' => 'ID:' . $status . ';Title:' . $this->input->post('member_full_name')
-                    )
-            );
-            $this->session->set_flashdata('success', $this->lang->line('reset_pass_success'));
-            redirect('gadmin/member');
+            $this->session->set_flashdata('success', 'Reset password berhasil');
+            redirect('admin/member');
         } else {
-            if ($this->User_model->get(array('id' => $id)) == NULL) {
-                redirect('gadmin/member');
+            if ($this->Member_model->get(array('id' => $id)) == NULL) {
+                redirect('admin/member');
             }
-            $data['member'] = $this->User_model->get(array('id' => $id));
+            $data['member'] = $this->Member_model->get(array('id' => $id));
             $data['title'] = $this->lang->line('reset_pass_member');
-            $data['main'] = 'member/change_pass';
+            $data['main'] = 'admin/member/change_pass';
             $this->load->view('admin/layout', $data);
         }
     }

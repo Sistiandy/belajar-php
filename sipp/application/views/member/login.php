@@ -164,7 +164,7 @@
                                         <td><?php echo $row['member_full_name'] ?></td>
                                         <td><?php echo $row['present_entry_time'] ?></td>
                                         <td><?php echo $row['present_out_time'] ?></td>
-                                        <td><?php echo ($row['present_is_late'] == 1)? 'Telat' : '-' ?></td>
+                                        <td><?php echo ($row['present_is_late'] == 1)? 'Telat' : 'Hadir' ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -191,11 +191,8 @@
                             <div class="form-group">
                                 <h2>ABSENSI</h2>
                                 <div class="row">
-                                    <div class="col-md-9">
+                                    <div class="col-md-12">
                                         <input autofocus="" name="nip" typt="text" class="form-control" placeholder="Nip">
-                                        <input name="password" type="password" class="form-control" placeholder="Password">
-                                    </div>
-                                    <div class="col-md-3" style="padding-left:0px">
                                         <div class="radio">
                                             <label>
                                                 <input type="radio" name="desc" value="0" > Datang

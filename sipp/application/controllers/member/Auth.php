@@ -37,7 +37,6 @@ class Auth extends CI_Controller {
             $lokasi = NULL;
         }
         $this->form_validation->set_rules('nip', 'Nip', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
         $this->form_validation->set_rules('desc', 'Keterangan', 'trim|required');
         if ($_POST AND $this->form_validation->run() == TRUE) {
             $nip = $this->input->post('nip', TRUE);
@@ -45,7 +44,6 @@ class Auth extends CI_Controller {
             $desc = $this->input->post('desc', TRUE);
             $this->db->from('member');
             $this->db->where('member_nip', $nip);
-            $this->db->where('password', sha1($password));
             $this->db->where('member_status', TRUE);
             $query = $this->db->get();
 
@@ -68,10 +66,10 @@ class Auth extends CI_Controller {
                         $params['present_entry_time'] = date('H:i:s');
                         $this->Present_model->add($params);
                         if ($lokasi != '') {
-                            $this->session->set_flashdata('alert', 'Yes, Absensi anda telah diinput');
+                            $this->session->set_flashdata('alert', 'Selamat datang, '.$query->row('member_full_name'). ' absen berhasil diinput.');
                             header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
                         } else {
-                            $this->session->set_flashdata('alert', 'Yes, Absensi anda telah diinput');
+                            $this->session->set_flashdata('alert', 'Selamat datang, '.$query->row('member_full_name'). ' absen berhasil diinput.');
                             redirect('member/auth/login');
                         }
                     }
@@ -88,10 +86,10 @@ class Auth extends CI_Controller {
                         $params['present_out_time'] = date('H:i:s');
                         $this->Present_model->add($params);
                         if ($lokasi != '') {
-                            $this->session->set_flashdata('alert', 'Yes, Absensi anda telah diinput');
+                            $this->session->set_flashdata('alert', 'Selamat jalan, '.$query->row('member_full_name'). ' absen pulang berhasil diinput hati-hati dijalan.');
                             header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
                         } else {
-                            $this->session->set_flashdata('alert', 'Yes, Absensi anda telah diinput');
+                            $this->session->set_flashdata('alert', 'Selamat jalan, '.$query->row('member_full_name'). ' absen pulang berhasil diinput hati-hati dijalan.');
                             redirect('member/auth/login');
                         }
                     }
