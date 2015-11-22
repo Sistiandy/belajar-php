@@ -142,6 +142,12 @@
             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 middle-login">
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                        <div class="row">
+                        <center>
+                            <h2><strong><?php echo pretty_date(date('Y-m-d'), 'l, d M Y',FALSE) ?></strong></h2>
+                        </center>
+                        </div>
+                        <div class="row">
                         <center>
                             <ul id="clock">	
                                 <li id="sec"></li>
@@ -149,6 +155,7 @@
                                 <li id="min"></li>
                             </ul>
                         </center>
+                        </div>
                     </div>
                     <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 tbl-login">
                         <table class="table table-striped">
@@ -291,7 +298,7 @@
                 </div>
 
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <form role="form" action="<?php echo site_url('member/auth/register') ?>" method="post">
+                    <?php echo form_open_multipart(site_url('member/auth/register')) ?>
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -360,7 +367,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    <?php echo form_close()?>
                 </div>
 
             </div>
