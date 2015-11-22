@@ -95,7 +95,7 @@ class Member extends CI_Controller {
             $status = $this->Member_model->add($params);
 
             if (!empty($_FILES['member_image']['name'])) {
-                if ($this->input->post('cases_id')) {
+                if ($this->input->post('member_id')) {
                     $createdate = $this->input->post('member_input_date');
                 } else {
                     $createdate = date('Y-m-d H:i');

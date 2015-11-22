@@ -17,11 +17,15 @@
 
         <link href="<?php echo media_url() ?>/fonts/css/font-awesome.min.css" rel="stylesheet">
         <link href="<?php echo media_url() ?>/css/animate.min.css" rel="stylesheet">
+        <link href="<?php echo media_url() ?>/css/jquery-ui.min.css" rel="stylesheet">
+        <link href="<?php echo media_url() ?>/css/jquery-ui.structure.min.css" rel="stylesheet">
+        <link href="<?php echo media_url() ?>/css/jquery-ui.theme.min.css" rel="stylesheet">
 
         <!-- Custom styling plus plugins -->
         <link href="<?php echo media_url() ?>/css/custom.css" rel="stylesheet">
 
         <script src="<?php echo media_url() ?>/js/jquery.min.js"></script>
+        <script src="<?php echo media_url() ?>/js/jquery-ui.min.js"></script>
         <script src="<?php echo media_url() ?>/js/bootstrap.min.js"></script>
 
         <!--[if lt IE 9]>
@@ -166,7 +170,7 @@
                                         <td><?php echo ($row['present_entry_time'] == NULL) ? '-' : $row['present_entry_time'] ?></td>
                                         <td><?php echo ($row['present_out_time'] == NULL) ? '-' : $row['present_out_time'] ?></td>
                                         <td><?php echo $row['present_desc'] ?></td>
-                                        <td><?php echo ($row['present_is_late'] == 1)? 'Telat' : '-' ?></td>
+                                        <td><?php echo ($row['present_is_late'] == 1) ? 'Telat' : '-' ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -280,9 +284,83 @@
                                     <center><label><?php echo $this->session->flashdata('failed') ?></label></center>
                                 <?php } ?>
                                 <input type="submit" class="btn btn-success btn-login" value="Login">
+                                <a  data-toggle="modal" href="#myModal" class="btn btn-primary btn-login" >Register</a>
                             </div>
                         </form>
                     </div>
+                </div>
+
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <form role="form" action="<?php echo site_url('member/auth/register') ?>" method="post">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Register</h4>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="modal-body">
+                                        <?php
+                                        $this->load->view('member/datepicker');
+                                        $inputUserName = set_value('username');
+                                        $inputFullName = set_value('member_full_name');
+                                        $inputSex = set_value('member_sex');
+                                        $inputBirthPlace = set_value('member_birth_place');
+                                        $inputBirthDate = set_value('member_birth_date');
+                                        $inputSchool = set_value('member_school');
+                                        $inputPhone = set_value('member_phone');
+                                        $inputAddress = set_value('member_address');
+                                        $inputMentor = set_value('member_mentor');
+                                        $inputDivison = set_value('member_division');
+                                        $inputStatus = set_value('member_status');
+                                        ?>
+                                        <label >Nama Lengkap *</label>
+                                        <input type="text" name="member_full_name" placeholder="Nama Lengkap" class="form-control" value="<?php echo $inputFullName; ?>"><br>
+                                        <label >Username *</label>
+                                        <input name="username" type="text" placeholder="Username" class="form-control" value="<?php echo $inputUserName; ?>"><br>
+                                        <label >Password *</label>
+                                        <input type="password" placeholder="Password" name="password" class="form-control"><br>
+                                        <label >Konfirmasi Password *</label>
+                                        <input type="password" placeholder="Konfirmasi Password" name="passconf" class="form-control">
+                                        <p style="color:#9C9C9C;margin-top: 5px"><i>Password minimal 6 karakter</i></p>
+                                        <label >Upload Photo </label>
+                                        <input type="file" name="member_image" class="form-control" ><br>
+                                        <label>Jenis Kelamin *</label>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="member_sex" value="MALE" <?php echo ($inputSex == 'MALE') ? 'checked' : ''; ?>> Laki-laki
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="member_sex" value="FEMALE" <?php echo ($inputSex == 'FEMALE') ? 'checked' : ''; ?>> Perempuan
+                                            </label>
+                                        </div>
+                                        <label >Tempat Lahir *</label>
+                                        <input type="text" name="member_birth_place" placeholder="Tempat Lahir" class="form-control" value="<?php echo $inputBirthPlace; ?>"><br>
+                                        <label >Tanggal Lahir *</label>
+                                        <input type="text" name="member_birth_date" placeholder="Tanggal Lahir" class="form-control datepicker" value="<?php echo $inputBirthDate; ?>"><br>
+                                        <label >Asal Sekolah *</label>
+                                        <input type="text" name="member_school" placeholder="Asal Sekolah" class="form-control" value="<?php echo $inputSchool; ?>"><br>
+                                        <label >Pembimbing *</label>
+                                        <input type="text" name="member_mentor" placeholder="Pembimbing" class="form-control" value="<?php echo $inputMentor; ?>"><br>
+                                        <label >No. Telepon *</label>
+                                        <input type="text" name="member_phone" placeholder="No. Telepon" class="form-control" value="<?php echo $inputPhone; ?>"><br>
+                                        <label >Alamat </label>
+                                        <textarea name="member_address" placeholder="Alamat" class="form-control"><?php echo $inputAddress; ?></textarea><br>
+                                        <label >Bagian </label>
+                                        <input type="text" name="member_division" placeholder="Bagian" class="form-control" value="<?php echo $inputDivison; ?>"><br>
+
+                                        <p style="color:#9C9C9C;margin-top: 5px"><i>*) Wajib diisi</i></p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
             </div>

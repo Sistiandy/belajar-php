@@ -25,6 +25,93 @@ class Auth extends CI_Controller {
         redirect('member/auth/login');
     }
 
+    public function register($id = NULL) {
+        $this->load->library('upload');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|xss_clean');
+        $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required|min_length[6]|matches[password]');
+        $this->form_validation->set_rules('member_full_name', 'Nama Lengkap', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('member_phone', 'No. Tlp/HP', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('member_sex', 'Jenis Kelamin', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('member_school', 'Asal Sekolah', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('member_mentor', 'Nama Pembimbing', 'trim|required|xss_clean');
+        $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>', '</div>');
+        $data['operation'] = is_null($id) ? 'Tambah' : 'Sunting';
+
+        if ($_POST AND $this->form_validation->run() == TRUE) {
+
+            $params['username'] = $this->input->post('username');
+            $params['password'] = sha1($this->input->post('password'));
+            $params['member_input_date'] = date('Y-m-d H:i:s');
+
+            $lastmember = $this->Member_model->get(array('order_by' => 'member_id', 'limit' => 1));
+            if (empty($lastmember)) {
+                $nip = $params['member_nip'] = date('Ym') . sprintf('%02d', 01);
+            } else {
+                $num = substr($lastmember['member_nip'], 6, 2);
+                $nip = $params['member_nip'] = date('Ym') . sprintf('%02d', $num + 01);
+            }
+
+            $params['member_status'] = $this->input->post('member_status');
+            $params['member_last_update'] = date('Y-m-d H:i:s');
+            $params['member_full_name'] = stripslashes($this->input->post('member_full_name'));
+            $params['member_sex'] = $this->input->post('member_sex');
+            $params['member_birth_place'] = $this->input->post('member_birth_place');
+            $params['member_birth_date'] = $this->input->post('member_birth_date');
+            $params['member_school'] = $this->input->post('member_school');
+            $params['member_phone'] = $this->input->post('member_phone');
+            $params['member_address'] = $this->input->post('member_address');
+            $params['member_mentor'] = $this->input->post('member_mentor');
+            $params['member_division'] = $this->input->post('member_division');
+            $status = $this->Member_model->add($params);
+
+            if (!empty($_FILES['member_image']['name'])) {
+                $createdate = date('Y-m-d H:i');
+                $paramsupdate['member_image'] = $this->do_upload($name = 'member_image', $createdate, $nip);
+            }
+            $paramsupdate['member_id'] = $status;
+            $this->Member_model->add($paramsupdate);
+
+            $this->session->set_flashdata('alert', 'Yes, Registrasi anda telah berhasil, silakan tunggu dikonfirmasi admin lalu login');
+            redirect('member/auth/login');
+        } else {
+
+            $this->session->set_flashdata('failed', 'Sorry, register form are not complete');
+            redirect('member/auth/login');
+        }
+    }
+
+    // Setting Upload File Requied
+    function do_upload($name, $createdate, $nip) {
+        $config['upload_path'] = FCPATH . 'uploads/';
+
+        $paramsupload = array('date' => $createdate);
+        list($date, $time) = explode(' ', $paramsupload['date']);
+        list($year, $month, $day) = explode('-', $date);
+        $config['upload_path'] = FCPATH . 'uploads/member_photo/' . $year . '/' . $month . '/' . $day . '/';
+
+        /* create directory if not exist */
+        if (!is_dir($config['upload_path'])) {
+            mkdir($config['upload_path'], 0777, TRUE);
+        }
+
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['max_size'] = '32000';
+        $config['file_name'] = $nip;
+        $this->upload->initialize($config);
+
+        if (!$this->upload->do_upload($name)) {
+            echo $config['upload_path'];
+            $this->session->set_flashdata('success', $this->upload->display_errors(''));
+            redirect(uri_string());
+        }
+
+        $upload_data = $this->upload->data();
+
+        return $upload_data['file_name'];
+    }
+
     function present($lokasi = '') {
         $this->load->model('Present_model');
         if ($this->session->userdata('logged_member')) {
@@ -66,10 +153,10 @@ class Auth extends CI_Controller {
                         $params['present_entry_time'] = date('H:i:s');
                         $this->Present_model->add($params);
                         if ($lokasi != '') {
-                            $this->session->set_flashdata('alert', 'Selamat datang, '.$query->row('member_full_name'). ' absen berhasil diinput.');
+                            $this->session->set_flashdata('alert', 'Selamat datang, ' . $query->row('member_full_name') . ' absen berhasil diinput.');
                             header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
                         } else {
-                            $this->session->set_flashdata('alert', 'Selamat datang, '.$query->row('member_full_name'). ' absen berhasil diinput.');
+                            $this->session->set_flashdata('alert', 'Selamat datang, ' . $query->row('member_full_name') . ' absen berhasil diinput.');
                             redirect('member/auth/login');
                         }
                     }
@@ -86,10 +173,10 @@ class Auth extends CI_Controller {
                         $params['present_out_time'] = date('H:i:s');
                         $this->Present_model->add($params);
                         if ($lokasi != '') {
-                            $this->session->set_flashdata('alert', 'Selamat jalan, '.$query->row('member_full_name'). ' absen pulang berhasil diinput hati-hati dijalan.');
+                            $this->session->set_flashdata('alert', 'Selamat jalan, ' . $query->row('member_full_name') . ' absen pulang berhasil diinput hati-hati dijalan.');
                             header("Location:" . site_url('member/auth/login') . "?location=" . urlencode($lokasi));
                         } else {
-                            $this->session->set_flashdata('alert', 'Selamat jalan, '.$query->row('member_full_name'). ' absen pulang berhasil diinput hati-hati dijalan.');
+                            $this->session->set_flashdata('alert', 'Selamat jalan, ' . $query->row('member_full_name') . ' absen pulang berhasil diinput hati-hati dijalan.');
                             redirect('member/auth/login');
                         }
                     }
