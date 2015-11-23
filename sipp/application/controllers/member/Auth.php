@@ -206,7 +206,7 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         $data['posts'] = $this->Posts_model->get(array('limit' => 3, 'status' => TRUE));
-        $data['present'] = $this->Present_model->get(array('date' => date('Y-m-d'), 'limit' => 10));
+        $data['present'] = $this->Present_model->get(array('date' => date('Y-m-d')));
         if ($_POST AND $this->form_validation->run() == TRUE) {
             if ($this->input->post('location')) {
                 $lokasi = $this->input->post('location');
