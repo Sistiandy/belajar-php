@@ -14,12 +14,12 @@
         <!-- Bootstrap core CSS -->
 
         <link href="<?php echo media_url() ?>/css/bootstrap.min.css" rel="stylesheet">
-
-        <link href="<?php echo media_url() ?>/fonts/css/font-awesome.min.css" rel="stylesheet">
-        <link href="<?php echo media_url() ?>/css/animate.min.css" rel="stylesheet">
         <link href="<?php echo media_url() ?>/css/jquery-ui.min.css" rel="stylesheet">
         <link href="<?php echo media_url() ?>/css/jquery-ui.structure.min.css" rel="stylesheet">
         <link href="<?php echo media_url() ?>/css/jquery-ui.theme.min.css" rel="stylesheet">
+
+        <link href="<?php echo media_url() ?>/fonts/css/font-awesome.min.css" rel="stylesheet">
+        <link href="<?php echo media_url() ?>/css/animate.min.css" rel="stylesheet">
 
         <!-- Custom styling plus plugins -->
         <link href="<?php echo media_url() ?>/css/custom.css" rel="stylesheet">
