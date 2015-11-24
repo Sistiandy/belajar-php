@@ -297,7 +297,7 @@
                                                 <div class="col-xs-12"> 
                                                     <div class="thumbnail adjust1"> 
                                                         <div class="col-md-2 col-sm-2 col-xs-12"> 
-                                                            <img class="media-object img-rounded img-responsive" src="<?php echo $row['posts_image'] ?>"> 
+                                                            <img class="media-object img-rounded img-responsive" src="<?php echo $row['posts_image']; ?>"> 
                                                         </div> 
                                                         <div class="col-md-10 col-sm-10 col-xs-12"> 
                                                             <div class="caption"> 

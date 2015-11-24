@@ -72,6 +72,56 @@
             }
 
             .carousel-indicators .active{ background: #31708f; } .adjust1{ float:left; width:100%; margin-bottom:0; } .adjust2{ margin:0; } .carousel-indicators li{ border :1px solid #ccc; } .carousel-control{ color:#31708f; width:5%; } .carousel-control:hover, .carousel-control:focus{ color:#31708f; } .carousel-control.left, .carousel-control.right { background-image: none; } .media-object{ margin:auto; margin-top:15%; } @media screen and (max-width: 768px) { .media-object{ margin-top:0; } }
+
+
+            table {
+                width: 100%;
+            }
+
+            thead, tbody, tr, td, th { display: block; }
+
+            tr:after {
+                content: ' ';
+                display: block;
+                visibility: hidden;
+                clear: both;
+            }
+
+            thead th {
+                height: 30px;
+
+                /*text-align: left;*/
+            }
+
+            tbody {
+                height: 250px;
+                overflow-y: auto;
+            }
+
+            thead {
+                /* fallback */
+            }
+
+
+            tbody td, thead th {
+                width: 16.5%;
+                float: left;
+            }
+
+            tbody td.col-name, thead th.col-name {
+                width: 26%;
+                float: left;
+            }
+
+            tbody td.col-ket, thead th.col-ket {
+                width: 12%;
+                float: left;
+            }
+
+            tbody td.col-no, thead th.col-no {
+                width: 5%;
+                float: left;
+            }
         </style>
         <script type="text/javascript">
 
@@ -132,6 +182,12 @@
             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 middle-login">
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                        <div class="row">
+                        <center>
+                            <h2><strong><?php echo pretty_date(date('Y-m-d'), 'l, d M Y',FALSE) ?></strong></h2>
+                        </center>
+                        </div>
+                        <div class="row">
                         <center>
                             <ul id="clock">	
                                 <li id="sec"></li>
@@ -139,28 +195,37 @@
                                 <li id="min"></li>
                             </ul>
                         </center>
+                        </div>
                     </div>
                     <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 tbl-login">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th class="col-no">No.</th>
                                     <th>Tanggal</th>
-                                    <th>Nama</th>
-                                    <th>Datang</th>
-                                    <th>Pulang</th>
-                                    <th>Keterangan</th>
+                                    <th class="col-name">Nama</th>
+                                    <th class="col-ket">Datang</th>
+                                    <th class="col-ket">Pulang</th>
+                                    <th>Kehadiran</th>
+                                    <th class="col-ket">Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($present as $row): ?>
+                                <?php $i = 1;
+                                foreach ($present as $row):
+                                    ?>
                                     <tr>
+                                        <td  class="col-no"><?php echo $i ?></td>
                                         <td><?php echo pretty_date($row['present_date'], 'l, d m Y', FALSE) ?></td>
-                                        <td><?php echo $row['member_full_name'] ?></td>
-                                        <td><?php echo $row['present_entry_time'] ?></td>
-                                        <td><?php echo $row['present_out_time'] ?></td>
-                                        <td><?php echo ($row['present_is_late'] == 1)? 'Telat' : '-' ?></td>
+                                        <td class="col-name"><?php echo $row['member_full_name'] ?></td>
+                                        <td class="col-ket"><?php echo ($row['present_entry_time'] == NULL) ? '-' : $row['present_entry_time'] ?></td>
+                                        <td class="col-ket"><?php echo ($row['present_out_time'] == NULL) ? '-' : $row['present_out_time'] ?></td>
+                                        <td><?php echo $row['present_desc'] ?></td>
+                                        <td class="col-ket"><?php echo ($row['present_is_late'] == 1) ? 'Telat' : '-' ?></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                    <?php $i++;
+                                endforeach;
+                                ?>
                             </tbody>
                         </table>
 
@@ -235,7 +300,7 @@
                                 <input name="password" type="password" class="form-control" placeholder="Password"><br>
                                 <?php if ($this->session->flashdata('failed')) { ?>
                                     <center><label><?php echo $this->session->flashdata('failed') ?></label></center>
-                                <?php } ?>
+<?php } ?>
                                 <input type="submit" class="btn btn-success btn-login" value="Login">
                             </div>
                         </form>
