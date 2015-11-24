@@ -40,7 +40,7 @@ class Member_model extends CI_Model {
         }
         if(isset($params['status']))
         {
-            $this->db->where('status', $params['status']);
+            $this->db->where('member_status', $params['status']);
         }
         if(isset($params['date_start']) AND isset($params['date_end']))
         {

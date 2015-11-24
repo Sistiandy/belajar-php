@@ -76,55 +76,60 @@
             }
 
             .carousel-indicators .active{ background: #31708f; } .adjust1{ float:left; width:100%; margin-bottom:0; } .adjust2{ margin:0; } .carousel-indicators li{ border :1px solid #ccc; } .carousel-control{ color:#31708f; width:5%; } .carousel-control:hover, .carousel-control:focus{ color:#31708f; } .carousel-control.left, .carousel-control.right { background-image: none; } .media-object{ margin:auto; margin-top:15%; } @media screen and (max-width: 768px) { .media-object{ margin-top:0; } }
-            
-            table {
-            width: 100%;
-        }
 
-        thead, tbody, tr, td, th { display: block; }
+            table.tbl-present {
+                width: 100%;
+            }
 
-        tr:after {
-            content: ' ';
-            display: block;
-            visibility: hidden;
-            clear: both;
-        }
+            thead.thead-present, tbody.tbody-present, tr.tr-present,tbody.tbody-present td,tbody.thead-present  th { display: block; }
 
-        thead th {
-            height: 30px;
+            tr:after {
+                content: ' ';
+                display: block;
+                visibility: hidden;
+                clear: both;
+            }
 
-            /*text-align: left;*/
-        }
+            thead.thead-present th {
+                height: 30px;
 
-        tbody {
-            height: 250px;
-            overflow-y: auto;
-        }
+                /*text-align: left;*/
+            }
 
-        thead {
-            /* fallback */
-        }
+            tbody.tbody-present {
+                height: 250px;
+                overflow-y: auto;
+            }
+
+            thead {
+                /* fallback */
+            }
 
 
-        tbody td, thead th {
-            width: 16.5%;
-            float: left;
-        }
+            tbody.tbody-present td, thead.thead-present th {
+                width: 16.5%;
+                float: left;
+            }
 
-        tbody td.col-name, thead th.col-name {
-            width: 26%;
-            float: left;
-        }
-        
-        tbody td.col-ket, thead th.col-ket {
-            width: 12%;
-            float: left;
-        }
-        
-        tbody td.col-no, thead th.col-no {
-            width: 5%;
-            float: left;
-        }
+            tbody.tbody-present td.col-date, thead.thead-present th.col-date {
+                width: 18%;
+                float: left;
+            }
+
+            tbody.tbody-present td.col-name, thead.thead-present th.col-name {
+                width: 29%;
+                float: left;
+            }
+
+            tbody.tbody-present td.col-ket, thead.thead-present th.col-ket {
+                width: 12%;
+                float: left;
+            }
+
+            tbody.tbody-present td.col-no, thead.thead-present th.col-no {
+                width: 5%;
+                float: left;
+            }
         </style>
         <script type="text/javascript">
 
@@ -192,45 +197,51 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
                         <div class="row">
-                        <center>
-                            <h2><strong><?php echo pretty_date(date('Y-m-d'), 'l, d M Y',FALSE) ?></strong></h2>
-                        </center>
+                            <center>
+                                <h2><strong><?php echo pretty_date(date('Y-m-d'), 'l, d M Y', FALSE) ?></strong></h2>
+                            </center>
                         </div>
                         <div class="row">
-                        <center>
-                            <ul id="clock">	
-                                <li id="sec"></li>
-                                <li id="hour"></li>
-                                <li id="min"></li>
-                            </ul>
-                        </center>
+                            <center>
+                                <ul id="clock">	
+                                    <li id="sec"></li>
+                                    <li id="hour"></li>
+                                    <li id="min"></li>
+                                </ul>
+                            </center>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 tbl-login">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
+                        <table class="table table-striped tbl-present">
+                            <thead class="thead-present">
+                                <tr class="tr-present">
                                     <th class="col-no">No.</th>
-                                    <th>Tanggal</th>
+                                    <th class="col-date">Tanggal</th>
                                     <th class="col-name">Nama</th>
                                     <th class="col-ket">Datang</th>
                                     <th class="col-ket">Pulang</th>
-                                    <th>Kehadiran</th>
+                                    <th class="col-ket">Kehadiran</th>
                                     <th class="col-ket">Keterangan</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php $i= 1; foreach ($present as $row): ?>
-                                    <tr>
+                            <tbody class="tbody-present">
+                                <?php
+                                $i = 1;
+                                foreach ($present as $row):
+                                    ?>
+                                    <tr class="tr-present">
                                         <td  class="col-no"><?php echo $i ?></td>
-                                        <td><?php echo pretty_date($row['present_date'], 'l, d m Y', FALSE) ?></td>
+                                        <td class="col-date"><?php echo pretty_date($row['present_date'], 'l, d m Y', FALSE) ?></td>
                                         <td class="col-name"><?php echo $row['member_full_name'] ?></td>
                                         <td class="col-ket"><?php echo ($row['present_entry_time'] == NULL) ? '-' : $row['present_entry_time'] ?></td>
                                         <td class="col-ket"><?php echo ($row['present_out_time'] == NULL) ? '-' : $row['present_out_time'] ?></td>
-                                        <td><?php echo $row['present_desc'] ?></td>
+                                        <td class="col-ket"><?php echo $row['present_desc'] ?></td>
                                         <td class="col-ket"><?php echo ($row['present_is_late'] == 1) ? 'Telat' : '-' ?></td>
                                     </tr>
-                                <?php $i++; endforeach; ?>
+                                    <?php
+                                    $i++;
+                                endforeach;
+                                ?>
                             </tbody>
                         </table>
 
@@ -342,7 +353,10 @@
                                     <center><label><?php echo $this->session->flashdata('failed') ?></label></center>
                                 <?php } ?>
                                 <input type="submit" class="btn btn-success btn-login" value="Login">
-                                <a  data-toggle="modal" href="#myModal" class="btn btn-primary btn-login" >Register</a>
+                                <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-login" >Register</a>
+                                <center>
+                                    <a data-toggle="modal" href="#member" >Lihat daftar member aktif</a>
+                                </center>
                             </div>
                         </form>
                     </div>
@@ -350,75 +364,119 @@
 
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <?php echo form_open_multipart(site_url('member/auth/register')) ?>
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Register</h4>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="modal-body">
-                                        <?php
-                                        $this->load->view('member/datepicker');
-                                        $inputUserName = set_value('username');
-                                        $inputFullName = set_value('member_full_name');
-                                        $inputSex = set_value('member_sex');
-                                        $inputBirthPlace = set_value('member_birth_place');
-                                        $inputBirthDate = set_value('member_birth_date');
-                                        $inputSchool = set_value('member_school');
-                                        $inputPhone = set_value('member_phone');
-                                        $inputAddress = set_value('member_address');
-                                        $inputMentor = set_value('member_mentor');
-                                        $inputDivison = set_value('member_division');
-                                        $inputStatus = set_value('member_status');
-                                        ?>
-                                        <label >Nama Lengkap *</label>
-                                        <input type="text" name="member_full_name" placeholder="Nama Lengkap" class="form-control" value="<?php echo $inputFullName; ?>"><br>
-                                        <label >Username *</label>
-                                        <input name="username" type="text" placeholder="Username" class="form-control" value="<?php echo $inputUserName; ?>"><br>
-                                        <label >Password *</label>
-                                        <input type="password" placeholder="Password" name="password" class="form-control"><br>
-                                        <label >Konfirmasi Password *</label>
-                                        <input type="password" placeholder="Konfirmasi Password" name="passconf" class="form-control">
-                                        <p style="color:#9C9C9C;margin-top: 5px"><i>Password minimal 6 karakter</i></p>
-                                        <label >Upload Photo </label>
-                                        <input type="file" name="member_image" class="form-control" ><br>
-                                        <label>Jenis Kelamin *</label>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="member_sex" value="MALE" <?php echo ($inputSex == 'MALE') ? 'checked' : ''; ?>> Laki-laki
-                                            </label>
-                                        </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="member_sex" value="FEMALE" <?php echo ($inputSex == 'FEMALE') ? 'checked' : ''; ?>> Perempuan
-                                            </label>
-                                        </div>
-                                        <label >Tempat Lahir *</label>
-                                        <input type="text" name="member_birth_place" placeholder="Tempat Lahir" class="form-control" value="<?php echo $inputBirthPlace; ?>"><br>
-                                        <label >Tanggal Lahir *</label>
-                                        <input type="text" name="member_birth_date" placeholder="Tanggal Lahir" class="form-control datepicker" value="<?php echo $inputBirthDate; ?>"><br>
-                                        <label >Asal Sekolah *</label>
-                                        <input type="text" name="member_school" placeholder="Asal Sekolah" class="form-control" value="<?php echo $inputSchool; ?>"><br>
-                                        <label >Pembimbing *</label>
-                                        <input type="text" name="member_mentor" placeholder="Pembimbing" class="form-control" value="<?php echo $inputMentor; ?>"><br>
-                                        <label >No. Telepon *</label>
-                                        <input type="text" name="member_phone" placeholder="No. Telepon" class="form-control" value="<?php echo $inputPhone; ?>"><br>
-                                        <label >Alamat </label>
-                                        <textarea name="member_address" placeholder="Alamat" class="form-control"><?php echo $inputAddress; ?></textarea><br>
-                                        <label >Bagian </label>
-                                        <input type="text" name="member_division" placeholder="Bagian" class="form-control" value="<?php echo $inputDivison; ?>"><br>
-
-                                        <p style="color:#9C9C9C;margin-top: 5px"><i>*) Wajib diisi</i></p>
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Register</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="modal-body">
+                                    <?php
+                                    $this->load->view('member/datepicker');
+                                    $inputUserName = set_value('username');
+                                    $inputFullName = set_value('member_full_name');
+                                    $inputSex = set_value('member_sex');
+                                    $inputBirthPlace = set_value('member_birth_place');
+                                    $inputBirthDate = set_value('member_birth_date');
+                                    $inputSchool = set_value('member_school');
+                                    $inputPhone = set_value('member_phone');
+                                    $inputAddress = set_value('member_address');
+                                    $inputMentor = set_value('member_mentor');
+                                    $inputDivison = set_value('member_division');
+                                    $inputStatus = set_value('member_status');
+                                    ?>
+                                    <label >Nama Lengkap *</label>
+                                    <input type="text" name="member_full_name" placeholder="Nama Lengkap" class="form-control" value="<?php echo $inputFullName; ?>"><br>
+                                    <label >Username *</label>
+                                    <input name="username" type="text" placeholder="Username" class="form-control" value="<?php echo $inputUserName; ?>"><br>
+                                    <label >Password *</label>
+                                    <input type="password" placeholder="Password" name="password" class="form-control"><br>
+                                    <label >Konfirmasi Password *</label>
+                                    <input type="password" placeholder="Konfirmasi Password" name="passconf" class="form-control">
+                                    <p style="color:#9C9C9C;margin-top: 5px"><i>Password minimal 6 karakter</i></p>
+                                    <label >Upload Photo </label>
+                                    <input type="file" name="member_image" class="form-control" ><br>
+                                    <label>Jenis Kelamin *</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="member_sex" value="MALE" <?php echo ($inputSex == 'MALE') ? 'checked' : ''; ?>> Laki-laki
+                                        </label>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="member_sex" value="FEMALE" <?php echo ($inputSex == 'FEMALE') ? 'checked' : ''; ?>> Perempuan
+                                        </label>
+                                    </div>
+                                    <label >Tempat Lahir *</label>
+                                    <input type="text" name="member_birth_place" placeholder="Tempat Lahir" class="form-control" value="<?php echo $inputBirthPlace; ?>"><br>
+                                    <label >Tanggal Lahir *</label>
+                                    <input type="text" name="member_birth_date" placeholder="Tanggal Lahir" class="form-control datepicker" value="<?php echo $inputBirthDate; ?>"><br>
+                                    <label >Asal Sekolah *</label>
+                                    <input type="text" name="member_school" placeholder="Asal Sekolah" class="form-control" value="<?php echo $inputSchool; ?>"><br>
+                                    <label >Pembimbing *</label>
+                                    <input type="text" name="member_mentor" placeholder="Pembimbing" class="form-control" value="<?php echo $inputMentor; ?>"><br>
+                                    <label >No. Telepon *</label>
+                                    <input type="text" name="member_phone" placeholder="No. Telepon" class="form-control" value="<?php echo $inputPhone; ?>"><br>
+                                    <label >Alamat </label>
+                                    <textarea name="member_address" placeholder="Alamat" class="form-control"><?php echo $inputAddress; ?></textarea><br>
+                                    <label >Bagian </label>
+                                    <input type="text" name="member_division" placeholder="Bagian" class="form-control" value="<?php echo $inputDivison; ?>"><br>
+
+                                    <p style="color:#9C9C9C;margin-top: 5px"><i>*) Wajib diisi</i></p>
                                 </div>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
-                    <?php echo form_close()?>
+                    </div>
+                    <?php echo form_close() ?>
+                </div>
+
+                <div class="modal fade" id="member" tabindex="-1" role="dialog" aria-labelledby="memberLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Daftar member aktif</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="modal-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Nama</th>
+                                                <th>Tanggal daftar</th>
+                                                <th>Bagian</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $i = 1;
+                                            foreach ($member as $row):
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $i ?></td>
+                                                    <td><?php echo $row['member_full_name'] ?></td>
+                                                    <td><?php echo pretty_date($row['member_input_date'], 'd/m/Y', FALSE) ?></td>
+                                                    <td><?php echo $row['member_division'] ?></td>
+                                                </tr>
+                                                <?php
+                                                $i++;
+                                            endforeach;
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>

@@ -199,6 +199,7 @@ class Auth extends CI_Controller {
     function login($lokasi = '') {
         $this->load->model('Posts_model');
         $this->load->model('Present_model');
+        $this->load->model('Member_model');
         $this->load->helper('text');
         if ($this->session->userdata('logged_member')) {
             redirect('member');
@@ -207,6 +208,7 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         $data['posts'] = $this->Posts_model->get(array('limit' => 3, 'status' => TRUE));
         $data['present'] = $this->Present_model->get(array('date' => date('Y-m-d')));
+        $data['member'] = $this->Member_model->get(array('status' => TRUE));
         if ($_POST AND $this->form_validation->run() == TRUE) {
             if ($this->input->post('location')) {
                 $lokasi = $this->input->post('location');
