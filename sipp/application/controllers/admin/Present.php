@@ -23,31 +23,39 @@ class Present extends CI_Controller {
     }
 
     // Dashboard View
-    public function index($nip = 'all', $date_start = 'all', $date_end = 'all', $offset = NULL) {
+    public function index($offset = NULL) {
         $this->load->library('pagination');
-        if ($_POST) {
-            $filter = array(
-                ($this->input->post('nip') == '') ? 'all' : $this->input->post('nip'),
-                ($this->input->post('date_start') == '') ? 'all' : $this->input->post('date_start'),
-                ($this->input->post('date_end') == '') ? 'all' : $this->input->post('date_end'),
-            );
-            $url = implode('/', $filter);
-            redirect('admin/present/index/' . $url);
-        }
+        // Apply Filter
+        // Get $_GET variable
+        $q = $this->input->get(NULL, TRUE);
+
+        $data['q'] = $q;
+
         $params = array();
-        if ($nip != 'all')
-            $params['member_nip'] = $nip;
-        if ($date_start != 'all')
-            $params['date_start'] = $date_start;
-        if ($date_end != 'all')
-            $params['date_end'] = $date_end;
+        // Nip
+        if (isset($q['n']) && !empty($q['n']) && $q['n'] != '') {
+            $params['member_nip'] = $q['n'];
+        }
+
+        // Date start
+        if (isset($q['ds']) && !empty($q['ds']) && $q['ds'] != '') {
+            $params['date_start'] = $q['ds'];
+        }
+
+        // Date end
+        if (isset($q['de']) && !empty($q['de']) && $q['de'] != '') {
+            $params['date_end'] = $q['de'];
+        }
+        
         $params_total = $params;
         $params['limit'] = 10;
         $params['offset'] = $offset;
         $data['present'] = $this->Present_model->get($params);
 
-
-        $config['base_url'] = site_url('admin/present/index/' . $nip . '/' . $date_start . '/' . $date_end . '/' . $offset);
+        $config['per_page'] = 10;
+        $config['uri_segment'] = 4;
+        $config['base_url'] = site_url('admin/present/index');
+        $config['suffix'] = '?' . http_build_query($_GET, '', "&");
         $config['total_rows'] = count($this->Present_model->get($params_total));
         $this->pagination->initialize($config);
 
@@ -58,12 +66,32 @@ class Present extends CI_Controller {
 
     public function export() {
         $this->load->helper('csv');
+        // Apply Filter
+        // Get $_GET variable
+        $q = $this->input->get(NULL, TRUE);
+
+        $data['q'] = $q;
+
+        $params = array();
+        // Nip
+        if (isset($q['n']) && !empty($q['n']) && $q['n'] != '') {
+            $params['member_nip'] = $q['n'];
+        }
+
+        // Date start
+        if (isset($q['ds']) && !empty($q['ds']) && $q['ds'] != '') {
+            $params['date_start'] = $q['ds'];
+        }
+
+        // Date end
+        if (isset($q['de']) && !empty($q['de']) && $q['de'] != '') {
+            $params['date_end'] = $q['de'];
+        }
         
 //        if($nip != 'all'){
 //            $params['member_nip'] = $nip;
 //        }
-        $data['present'] = $this->Present_model->get();
-        $params = array();
+        $data['present'] = $this->Present_model->get($params);
         $csv = array(
             0 => array(
                 'No.', 'NIP', 'Nama', 'Tanggal', 'Jam masuk', 'Jam keluar',

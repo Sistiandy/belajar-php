@@ -5,20 +5,20 @@
             Daftar Absensi
             <span class="pull-right">
                 <a class="btn btn-sm btn-default" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" ><span class="glyphicon glyphicon-align-justify"></span></a>
-                <a class="btn btn-sm btn-success" href="<?php echo site_url('admin/present/export') ?>" ><span class="glyphicon glyphicon-print"></span></a>
+                <a class="btn btn-sm btn-success" href="<?php echo site_url('admin/present/export' . '/?' . http_build_query($q)) ?>" ><span class="glyphicon glyphicon-print"></span></a>
             </span>
         </h3>
         <div class="collapse" id="collapseExample">
-            <?php echo form_open(current_url()) ?>
+            <?php echo form_open(current_url(), array('method'=>'get')) ?>
             <div class="row">
                 <div class="col-md-4">
-                    <input type="text" name="nip" placeholder="Nip" class="form-control">
+                    <input type="text" name="n" placeholder="Nip" class="form-control">
                 </div>
                 <div class="col-md-3">
-                    <input type="text" name="date_start" placeholder="Tanggal Mulai" value="" class="form-control datepicker">
+                    <input type="text" name="ds" placeholder="Tanggal Mulai" value="" class="form-control datepicker">
                 </div>
                 <div class="col-md-3">
-                    <input type="text" name="date_end" placeholder="Tanggal Akhir" value="" class="form-control datepicker">
+                    <input type="text" name="de" placeholder="Tanggal Akhir" value="" class="form-control datepicker">
                 </div>
                 <div class="col-md-2">
                     <input type="submit" class="btn btn-success" value="Filter">
@@ -54,6 +54,9 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
+        <div class="pagination">
+            <?php echo $this->pagination->create_links(); ?>
         </div>
     </div>
 </div>

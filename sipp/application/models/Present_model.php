@@ -22,27 +22,34 @@ class Present_model extends CI_Model {
         if (isset($params['id'])) {
             $this->db->where('present.present_id', $params['id']);
         }
+
         if (isset($params['year'])) {
             $this->db->where('present_year', $params['year']);
         }
+
         if (isset($params['month'])) {
             $this->db->where('present_month', $params['month']);
         }
+
         if (isset($params['date'])) {
             $this->db->where('present_date', $params['date']);
         }
+
         if (isset($params['desc'])) {
             $this->db->where('present_desc', $params['desc']);
         }
+
         if (isset($params['member_id'])) {
             $this->db->where('member_member_id', $params['member_id']);
         }
+
         if (isset($params['member_nip'])) {
             $this->db->where('member_member_nip', $params['member_nip']);
         }
+
         if (isset($params['date_start']) AND isset($params['date_end'])) {
-            $this->db->where('present_date', $params['date_start']);
-            $this->db->or_where('present_date', $params['date_end']);
+            $this->db->where('present_date >=', $params['date_start'] . ' 00:00:00');
+            $this->db->where('present_date <=', $params['date_end'] . ' 23:59:59');
         }
 
         if (isset($params['limit'])) {
@@ -56,7 +63,7 @@ class Present_model extends CI_Model {
         if (isset($params['order_by'])) {
             $this->db->order_by($params['order_by'], 'desc');
         } else {
-            $this->db->order_by('present_id', 'desc');
+            $this->db->order_by('present_date', 'desc');
         }
 
         $this->db->select('present.present_id, present_year, present_month, present_date,
