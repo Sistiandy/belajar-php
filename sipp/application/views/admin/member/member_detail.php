@@ -6,6 +6,7 @@
                 <span class=" pull-right">
                     <a href="<?php echo site_url('admin/member') ?>" class="btn btn-info btn-sm"><span class="fa fa-arrow-left"></span>&nbsp; Kembali</a> 
                     <a href="<?php echo site_url('admin/member/edit/' . $member['member_id']) ?>" class="btn btn-success btn-sm"><span class="fa fa-edit"></span>&nbsp; Edit</a> 
+                    <a target="_blank" href="<?php echo site_url('admin/member/report/' . $member['member_id']) ?>" class="btn btn-warning btn-sm"><span class="fa fa-archive"></span>&nbsp; Cetak surat keterangan</a> 
                 </span>
             </h3><br>
         </div>

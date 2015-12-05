@@ -40,7 +40,7 @@ class Member extends CI_Controller {
             redirect('admin/member');
         }
         $data['member'] = $this->Member_model->get(array('id' => $id));
-        $data['title'] = 'Detail posting';
+        $data['title'] = 'Detail peserta';
         $data['main'] = 'admin/member/member_detail';
         $this->load->view('admin/layout', $data);
     }
@@ -148,7 +148,7 @@ class Member extends CI_Controller {
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
         $config['max_size'] = '32000';
         $config['file_name'] = $nip;
-                $this->upload->initialize($config);
+        $this->upload->initialize($config);
 
         if (!$this->upload->do_upload($name)) {
             echo $config['upload_path'];
@@ -204,6 +204,17 @@ class Member extends CI_Controller {
             $this->session->set_flashdata('delete', 'Delete');
             redirect('admin/member/edit/' . $id);
         }
+    }
+
+    function report($id = NULL) {
+        $this->load->helper(array('dompdf'));
+        if ($id == NULL)
+            redirect('admin/member');
+
+        $data['member'] = $this->Member_model->get(array('id' => $id));
+
+        $html = $this->load->view('admin/member/member_pdf', $data, true);
+        $data = pdf_create($html, '', TRUE);
     }
 
 }

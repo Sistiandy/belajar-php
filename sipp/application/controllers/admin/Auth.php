@@ -32,7 +32,7 @@ class Auth extends CI_Controller {
         $this->load->helper('text');
         $data['posts'] = $this->Posts_model->get(array('limit' => 3, 'status' => TRUE));
         $data['present'] = $this->Present_model->get(array('limit' => 10, 'date' => date('Y-m-d')));
-        $data['member'] = $this->Member_model->get(array('status' => TRUE));
+        $data['member'] = $this->Member_model->get(array('status' => TRUE, 'order_by' => 'member_full_name'));
         if ($this->session->userdata('logged')) {
             redirect('admin');
         }
