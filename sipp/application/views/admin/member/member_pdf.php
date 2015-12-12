@@ -14,7 +14,7 @@
               <p>&nbsp;</p>
               <p>&nbsp;</p>
               <h3><strong><u> SURAT KETERANGAN MAGANG KERJA</u></strong></h3>              
-          0<?php echo substr($member['member_nip'],3) ?>/SAT-HRA/CLS2/<?php echo pretty_date(date('Y-m-d'), 'm',false)?>/<?php echo pretty_date(date('Y-m-d'), 'Y',false)?>              </p>
+          0<?php echo substr($member['member_nip'],3) ?>/SAT-HRA/CLS2/<?php $this->load->helper('tanggal'); $namaBulan=konversiBulan(pretty_date(date('Y-m-d'), 'm',false)); echo $namaBulan; ?>/<?php echo pretty_date(date('Y-m-d'), 'Y',false)?>              </p>
             </div>
 			<br>
             <p align="justify"> Yang bertanda tangan dibawah ini,</p>
